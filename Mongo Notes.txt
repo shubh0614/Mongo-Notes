@@ -1,0 +1,29 @@
+- NoSQL Database
+- Document contains data in field-value pairs.It is in BJSON(Binary JavaScript Object Notation ) Format.
+- Collection is group of one or more document. And database is group of one or more collections.
+
+
+- show dbs -> Shows all available databases.
+- show collections -> Shows all available collections.
+- use DatabaseName -> Use or create a database.
+- db.createCollection("CollectionName") -> Create collection in a database.
+- db.dropDatabase() -> Used to drop a Database.
+- db.CollectionName.insertOne({name:"Alex",age:30,cgpa:4}) -> Insert one field value pair in document.
+- db.CollectionName.insertMany([{name:"Alex",age:30,cgpa:4},{name:"Bob",age:32,cgpa:3.8}]) -> Insert more than one field value pair in document.
+- db.student.find() -> Shows all key value pair.
+
+- DataTypes in MongoDB:
+  - db.CollectionName.insertOne({name:"Alex",                               -> name is String
+                                age:30 ,                                    -> age is int
+                                cgpa:4.1 ,                                  -> cgpa is double
+                                fullTime: true ,                            -> fullTime is Boolean
+                                regDate: new Date("2024-07-26"),            -> regDate is Date
+                                gradDate: null,                             -> gradDate is null
+                                courses: ["Biology","Chemistry","Physics"], -> courses is Array
+                                address: {street: "123", city:"Delhi" }     -> address is Document
+                                })     
+
+
+
+
+
