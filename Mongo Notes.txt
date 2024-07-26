@@ -10,7 +10,11 @@
 - db.dropDatabase() -> Used to drop a Database.
 - db.CollectionName.insertOne({name:"Alex",age:30,cgpa:4}) -> Insert one field value pair in document.
 - db.CollectionName.insertMany([{name:"Alex",age:30,cgpa:4},{name:"Bob",age:32,cgpa:3.8}]) -> Insert more than one field value pair in document.
+
 - db.student.find() -> Shows all key value pair.
+- db.student.find({{field:"value"}}) -> We can also find for a particular query. Similar to WHERE Clause in SQL.
+- db.student.find({query},{projection}) : Using projection we can find only specified fields. eg - db.students.find({},{_id:false,name:true,cgpa:true}) will only return name and cgpa field.
+
 
 - DataTypes in MongoDB:
   - db.CollectionName.insertOne({name:"Alex",                               -> name is String
@@ -22,6 +26,45 @@
                                 courses: ["Biology","Chemistry","Physics"], -> courses is Array
                                 address: {street: "123", city:"Delhi" }     -> address is Document
                                 })     
+
+
+- db.CollectionName.find().sort({field:1 or -1}) : This shows data by sorting it in asc(use 1) or desc(use -1) order.
+
+- db.CollectionName.find().limit("No of data") : Using limit we can specify how many records we want by passing no of data in brackets.
+
+- db.CollectionName.find().sort({field:1 or -1}).limit("No of data") : We can use both limit and sort together as well.
+
+- db.CollectionName.updateOne(filter,update) : Used to update a particular record. eg - db.students.updateOne({name:"Robyn"},{$set:{name:"Rob",cgpa:3.9}})
+                                               We can also remove filed using unset eg - db.students.updateOne({name:"Robyn"},{$unset:{cgpa:3.9}})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
