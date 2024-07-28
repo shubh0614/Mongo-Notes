@@ -5,15 +5,15 @@
 
 - show dbs -> Shows all available databases.
 - show collections -> Shows all available collections.
+
+
 - use DatabaseName -> Use or create a database.
 - db.createCollection("CollectionName") -> Create collection in a database.
-- db.dropDatabase() -> Used to drop a Database.
-- db.CollectionName.insertOne({name:"Alex",age:30,cgpa:4}) -> Insert one field value pair in document.
-- db.CollectionName.insertMany([{name:"Alex",age:30,cgpa:4},{name:"Bob",age:32,cgpa:3.8}]) -> Insert more than one field value pair in document.
+  eg - db.createCollection("teachers",{capped:true,size:10000000,max:100} , {autoIndexID:true}) : capped shows that this collectio will have max size, size shows the size and max shows no of documents in collection and autoIndexId shows wether the collection will be indexed or not.
 
-- db.student.find() -> Shows all key value pair.
-- db.student.find({{field:"value"}}) -> We can also find for a particular query. Similar to WHERE Clause in SQL.
-- db.student.find({query},{projection}) : Using projection we can find only specified fields. eg - db.students.find({},{_id:false,name:true,cgpa:true}) will only return name and cgpa field.
+
+- db.CollectionName.drop() -> Deletes a collection.
+- db.dropDatabase() -> Used to drop a Database.
 
 
 - DataTypes in MongoDB:
@@ -28,45 +28,73 @@
                                 })     
 
 
-- db.CollectionName.find().sort({field:1 or -1}) : This shows data by sorting it in asc(use 1) or desc(use -1) order.
-
-- db.CollectionName.find().limit("No of data") : Using limit we can specify how many records we want by passing no of data in brackets.
-
-- db.CollectionName.find().sort({field:1 or -1}).limit("No of data") : We can use both limit and sort together as well.
-
-- db.CollectionName.updateOne(filter,update) : Used to update a particular record. eg - db.students.updateOne({name:"Robyn"},{$set:{name:"Rob",cgpa:3.9}})
-                                               We can also remove filed using unset eg - db.students.updateOne({name:"Robyn"},{$unset:{cgpa:3.9}})
+- db.student.find() -> Shows all key value pair.
+- db.student.find({{field:"value"}}) -> We can also find for a particular query. Similar to WHERE Clause in SQL.
+- db.student.find({query},{projection}) -> Using projection we can find only specified fields. eg - db.students.find({},{_id:false,name:true,cgpa:true}) will only return name and cgpa field.
+- db.students.find({name:"Rob"}).explain("executionStats") -> Used to find the execution stats of a query.
 
 
+- db.CollectionName.find().sort({field:1 or -1}) -> This shows data by sorting it in asc(use 1) or desc(use -1) order.
+- db.CollectionName.find().limit("No of data") -> Using limit we can specify how many records we want by passing no of data in brackets.
+- db.CollectionName.find().sort({field:1 or -1}).limit("No of data") -> We can use both limit and sort together as well.
 
 
+- db.CollectionName.insertOne({name:"Alex",age:30,cgpa:4}) -> Insert one field value pair in document.
+- db.CollectionName.insertMany([{name:"Alex",age:30,cgpa:4},{name:"Bob",age:32,cgpa:3.8}]) -> Insert more than one field value pair in document.
 
 
+- $set -> Used to set value for a field or create field if it doesn't exist.
+- $unset -> Used to remove a field.
+- $exist -> Used  to check if a field exist or not.
 
 
+- db.CollectionName.updateOne({filter},{update}) -> Used to update a particular record. eg - db.students.updateOne({name:"Robyn"},{$set:{name:"Rob",cgpa:3.9}})
+                                               We can also remove filed using unset eg - db.students.updateOne({name:"Robyn"},{$unset:{cgpa:""}})
+- db.CollectionName.updateMany({filter,update}) -> Used to update more than one record at once. eg - db.students.updateMany({designation:"Student"},{$set:{gradDate:new Date("2024-07-30")}}).
+                                                 eg - db.students.updateMany({fullTime:{$exists:false}},{$set:{class:"1st"}})
 
 
+- db.CollectionName.deleteOne({field:value}) -> Used to delete a particular record. eg - db.students.deleteOne({name:"Bob"}).
+- db.CollectionName.deleteMany({field:value}) -> Used to delete more than one records. eg - db.students.deleteMany({class:"1st"}).
 
 
+- Operators are denoted with $ sign.
+
+- Comparison Operators ->
+    - $ne -> Not Equals
+          - eg : db.students.find({name:{$ne:"ROB"}})
+
+    - $lt -> Less Then
+    - $lte -> Less Then Equal to
+    - $gt -> Greater Then
+    - $gte -> Greater Then Equals to 
+          - eg : db.students.find({age:{$gt:28,$lt:32}})
+
+    - $in -> In operator
+          - eg : db.students.find({name:{$in:["Rob","Alex"]}})
+    - $nin -> Not In operator
+          - eg : db.students.find({name:{$nin:["Rob","Alex"]}})
+        
+
+  - Logical Operators ->
+    - $and -> Returns all doc that match the condition of both clauses.
+          - eg : db.students.find({$and:[{cgpa:{$gt:3.7}} , {age:{$lt:30}}]})
+
+    - $not -> Returns all doc that do not macth the query expr.
+          - eg : db.students.find({cgpa:{$not:{$gt:3.7}}})
+
+    - $nor -> Returns all doc that fail to match both the clauses.
+          - eg : db.students.find({$nor:[{cgpa:{$gt:3.7}} , {age:{$lt:30}}]})
+
+    - $or -> Returns all doc that match the condition of either of clauses.
+          - eg : db.students.find({$or:[{cgpa:{$gt:3.7}} , {age:{$lt:30}}]})
 
 
+- Indexes -> Indexes allow for quick lookup of a field however it takes more memory and slow crud operations. 
+             Indexing is useful when we have to perform a lot of searching and not updating.
+          
+          - db.students.createIndex({name:1}) : Creates index for particular field( here name) in asc(1) or desc(-1) order.
 
+          - db.students.getIndexes() : Returns all existing indexes.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          - db.students.dropIndex("name_1") : Removes a particular index.
