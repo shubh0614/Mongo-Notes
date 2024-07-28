@@ -29,31 +29,37 @@
 
 
 - db.student.find() -> Shows all key value pair.
-- db.student.find({{field:"value"}}) -> We can also find for a particular query. Similar to WHERE Clause in SQL.
+- db.student.findOne({field:"value"}) -> Show a particular field value pair.
+- db.student.find({field:"value"}) -> We can also find for a particular query. Similar to WHERE Clause in SQL.
 - db.student.find({query},{projection}) -> Using projection we can find only specified fields. eg - db.students.find({},{_id:false,name:true,cgpa:true}) will only return name and cgpa field.
 - db.students.find({name:"Rob"}).explain("executionStats") -> Used to find the execution stats of a query.
+- db.student.find().pretty() -> Shows all key value pair in a formatted way.
 
 
 - db.CollectionName.find().sort({field:1 or -1}) -> This shows data by sorting it in asc(use 1) or desc(use -1) order.
 - db.CollectionName.find().limit("No of data") -> Using limit we can specify how many records we want by passing no of data in brackets.
 - db.CollectionName.find().sort({field:1 or -1}).limit("No of data") -> We can use both limit and sort together as well.
+- db.CollectionName.find().skip(No of rec) -> This func skips the no of rec passed.
 
 
+- db.CollectionName.insert({name:"Alex",age:30,cgpa:4},{name:"Mark",age:30,cgpa:3.5}) -> Insert field value pair in document.
 - db.CollectionName.insertOne({name:"Alex",age:30,cgpa:4}) -> Insert one field value pair in document.
-- db.CollectionName.insertMany([{name:"Alex",age:30,cgpa:4},{name:"Bob",age:32,cgpa:3.8}]) -> Insert more than one field value pair in document.
+- db.CollectionName.insertMany([{name:"Alex",age:30,cgpa:4},{name:"Bob",age:32,cgpa:3.8}]) -> Insert more than one field value pair in document given as array.
 
 
 - $set -> Used to set value for a field or create field if it doesn't exist.
 - $unset -> Used to remove a field.
 - $exist -> Used  to check if a field exist or not.
 
-
-- db.CollectionName.updateOne({filter},{update}) -> Used to update a particular record. eg - db.students.updateOne({name:"Robyn"},{$set:{name:"Rob",cgpa:3.9}})
-                                               We can also remove filed using unset eg - db.students.updateOne({name:"Robyn"},{$unset:{cgpa:""}})
+- db.CollectionName.update({filter},{update}) -> Used to update a particular record. eg - db.students.update({name:"Robyn"},{$set:{name:"Rob",cgpa:3.9}}).
+- db.CollectionName.findOneAndUpdate({filter},{update}) -> Used to update a particular record. eg - db.students.findOneAndUpdate({name:"Martinn"},{$set:{name:"Martin",cgpa:3.9}}).
+- db.CollectionName.updateOne({filter},{update}) -> Used to update a particular record. eg - db.students.updateOne({name:"Robyn"},{$set:{name:"Rob",cgpa:3.9}}).
+                                               We can also remove filed using unset eg - db.students.updateOne({name:"Robyn"},{$unset:{cgpa:""}}).
 - db.CollectionName.updateMany({filter,update}) -> Used to update more than one record at once. eg - db.students.updateMany({designation:"Student"},{$set:{gradDate:new Date("2024-07-30")}}).
                                                  eg - db.students.updateMany({fullTime:{$exists:false}},{$set:{class:"1st"}})
 
-
+- db.CollectionName.remove({field:value}) -> Used to delete a particular record. eg - db.students.remove({name:"Bob"}).
+- db.CollectionName.remove({}) -> Used to delete a all record. eg - db.students.remove({}).
 - db.CollectionName.deleteOne({field:value}) -> Used to delete a particular record. eg - db.students.deleteOne({name:"Bob"}).
 - db.CollectionName.deleteMany({field:value}) -> Used to delete more than one records. eg - db.students.deleteMany({class:"1st"}).
 
@@ -61,6 +67,8 @@
 - Operators are denoted with $ sign.
 
 - Comparison Operators ->
+    - $eq -> Equals
+          - eg : db.students.find({name:{$eq:"ROB"}})
     - $ne -> Not Equals
           - eg : db.students.find({name:{$ne:"ROB"}})
 
