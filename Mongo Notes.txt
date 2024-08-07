@@ -106,3 +106,4 @@
           - db.students.getIndexes() : Returns all existing indexes.
 
           - db.students.dropIndex("name_1") : Removes a particular index.
+
